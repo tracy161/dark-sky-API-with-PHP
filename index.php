@@ -1,6 +1,6 @@
 <?php
 
-	$coordinates = '-37.7722,144.9994';
+	$coordinates = '-37.8136,144.9631';
 
 	$api_url = 'https://api.darksky.net/forecast/7608e52e3fdae7f59e1cec1326de837a/'.$coordinates;
 
@@ -43,13 +43,32 @@
 
 		<ul class="list-group" style="margin: 0 auto; max-width: 320px;">
 			<?php 
+
+			// set counter as zero
+
+			$i = 0;
 			// start the foreach loop to display hourly forcast
 			foreach ($forecast->hourly->data as $hour): 
 				
 			?>
-		  <li class="list-group-item"><?php echo round($hour->temperature);?>&deg;</li>
+		  <li class="list-group-item d-flex justify-content-between">
+		  		<p class="lead m-0">
+		  			<?php echo date("G:i",$hour->time);?>
+		  		</p>
+		  		<p class="lead m-0">
+		  			<?php echo round($hour->temperature);?>&deg;
+		  		</p>
+		  		<p class="lead m-0">
+		  			<span class="sr-only">Humidity</span> <?php echo $hour->humidity*100; ?>%
+		  		</p>
+		  </li>
 
 		  <?php
+		  	// Increase counter by one for each iteration
+
+		  	$i++;
+		  	// stop the loop after we have 12 iterations
+		  	if($i==12) break;
 		  	// end the foreach loop
 			endforeach;
 		  ?>
